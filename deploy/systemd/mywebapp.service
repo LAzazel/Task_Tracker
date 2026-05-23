@@ -1,0 +1,19 @@
+[Unit]
+Description=mywebapp service
+Requires=mywebapp.socket
+After=network.target
+
+[Service]
+Type=simple
+Sockets=mywebapp.socket
+User=app
+Group=app
+WorkingDirectory=/opt/mywebapp
+Environment=MYWEBAPP_CONFIG=/etc/mywebapp/config.ini
+Environment=PYTHONPATH=/opt/mywebapp
+ExecStartPre=/opt/mywebapp/venv/bin/python /opt/mywebapp/scripts/migrate.py
+ExecStart=/opt/mywebapp/venv/bin/gunicorn --workers 2 --bind fd:// mywebapp.wsgi:app
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
