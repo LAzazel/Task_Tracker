@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from datetime import datetime
 from typing import Any
 
 from flask import Flask, Response, jsonify, request
@@ -137,4 +136,3 @@ def create_app() -> Flask:
 
 
 app = create_app()
-

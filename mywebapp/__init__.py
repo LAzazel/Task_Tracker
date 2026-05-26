@@ -1,2 +1,1 @@
 """mywebapp package."""
-

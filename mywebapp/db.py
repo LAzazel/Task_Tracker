@@ -22,4 +22,3 @@ def get_connection(db: DbConfig) -> Iterator[psycopg2.extensions.connection]:
         yield conn
     finally:
         conn.close()
-

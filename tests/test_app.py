@@ -122,4 +122,3 @@ def test_mark_done_ok(client, monkeypatch):
     assert response.status_code == 200
     data = response.get_json()
     assert data["status"] == "done"
-

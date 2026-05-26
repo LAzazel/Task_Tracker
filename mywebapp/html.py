@@ -52,4 +52,3 @@ def render_root(endpoints: Iterable[str]) -> str:
     items = "".join(f"<li>{endpoint}</li>" for endpoint in endpoints)
     body = "<h1>mywebapp endpoints</h1><ul>" + items + "</ul>"
     return render_layout("mywebapp", body)
-

@@ -70,4 +70,3 @@ def load_config(path: str | None = None) -> AppConfig:
 def to_dsn(db: DbConfig) -> Tuple[str, str]:
     dsn = f"dbname={db.name} user={db.user} password={db.password} host={db.host} port={db.port}"
     return dsn, db.password
-
