@@ -32,7 +32,9 @@ jobs:
           scp -P "$SSH_PORT" -o StrictHostKeyChecking=no \
             deploy/target_deploy.sh "$SSH_USER@$SSH_HOST:/opt/mywebapp/target_deploy.sh"
           ssh -p "$SSH_PORT" -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" \
-            "GHCR_USER='$GHCR_USER' GHCR_TOKEN='$GHCR_TOKEN' IMAGE_NAME='$IMAGE_NAME' IMAGE_TAG='$IMAGE_TAG' bash /opt/mywebapp/target_deploy.sh"
+            "GHCR_USER='$GHCR_USER' GHCR_TOKEN='$GHCR_TOKEN' \
+            IMAGE_NAME='$IMAGE_NAME' IMAGE_TAG='$IMAGE_TAG' \
+            bash /opt/mywebapp/target_deploy.sh"
 
       - name: Verify deployment
         env:
