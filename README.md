@@ -219,3 +219,54 @@ curl -i http://127.0.0.1:5000/health/alive
 - Застосунок слухає `127.0.0.1:5000`
 - PostgreSQL доступна лише з `127.0.0.1`
 - Зовнішній доступ тільки через nginx (порт 80)
+
+## CI/CD (Lab 3)
+
+CI запускає лінтери, тести з покриттям та збірку образу. CD розгортає застосунок на target node через self-hosted runner за анотованими тегами.
+
+### Необхідні GitHub Secrets
+
+- `TARGET_HOST` - IP або DNS target node
+- `TARGET_USER` - користувач для SSH
+- `TARGET_PORT` - порт SSH (наприклад, 22)
+- `TARGET_SSH_KEY` - приватний ключ для SSH
+- `GHCR_TOKEN` - токен з правами read:packages для GHCR
+
+### Структура CI/CD
+
+- CI: `.github/workflows/ci.yml`
+  - Flake8, ShellCheck, Hadolint, Yamllint
+  - Pytest + coverage (мінімум 40%)
+  - Публікація coverage.xml як артефакту на main
+  - Збірка образу та пуш у GHCR
+- CD: `.github/workflows/deploy.yml`
+  - Запуск на self-hosted runner
+  - Деплой на target node через SSH
+  - Верифікація доступності сервісу
+
+### Підготовка target node
+
+1) Скопіювати файли на target node (один раз):
+
+```bash
+scp deploy/docker-compose.prod.yml deploy/target_setup.sh deploy/systemd/mywebapp-container.service docker/nginx.conf docker/config.ini <user>@<host>:/opt/mywebapp/
+```
+
+2) Запустити підготовку:
+
+```bash
+sudo bash /opt/mywebapp/target_setup.sh
+```
+
+### Розгортання
+
+- Пуш анотованого тегу запускає CD:
+
+```bash
+git tag -a v1.0.0 -m "release v1.0.0"
+git push origin v1.0.0
+```
+
+### Верифікація
+
+Скрипт `deploy/verify.sh` перевіряє, що доступні `/` та `/tasks`, а `/health/*` недоступні з nginx.

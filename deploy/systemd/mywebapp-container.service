@@ -1,0 +1,17 @@
+[Unit]
+Description=mywebapp container stack
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/opt/mywebapp
+ExecStart=/usr/bin/docker compose -f /opt/mywebapp/docker-compose.prod.yml up -d
+ExecStop=/usr/bin/docker compose -f /opt/mywebapp/docker-compose.prod.yml down
+TimeoutStartSec=120
+TimeoutStopSec=120
+
+[Install]
+WantedBy=multi-user.target
+

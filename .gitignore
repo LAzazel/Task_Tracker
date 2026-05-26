@@ -8,6 +8,8 @@ __pycache__/
 .idea/
 .DS_Store
 Thumbs.db
-
+*.coverage
+coverage.xml
+.pytest_cache/
 lab2-research/
 lab2-results/
