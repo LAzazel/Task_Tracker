@@ -1,3 +1,4 @@
+.git/
 .venv/
 __pycache__/
 *.pyc
@@ -9,5 +10,3 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-lab2-research/
-lab2-results/

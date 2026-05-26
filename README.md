@@ -94,6 +94,37 @@ $env:MYWEBAPP_CONFIG="tests\\fixtures\\config.ini"
 python -m flask --app mywebapp.app run --host 127.0.0.1 --port 5000
 ```
 
+## Запуск через Docker Compose (Lab 2)
+
+Файли:
+
+- `docker-compose.yml`
+- `Dockerfile`
+- `docker/config.ini`
+- `docker/nginx.conf`
+
+Запуск у фоні:
+
+```bash
+docker compose up -d --build
+```
+
+Перевірка:
+
+```bash
+curl -H "Accept: application/json" http://localhost/tasks
+curl -X POST -d "title=Check" http://localhost/tasks
+```
+
+Зупинка:
+
+```bash
+docker compose down
+```
+
+Дані PostgreSQL зберігаються у volume `db-data` і переживають перезапуск контейнерів.
+
+
 ## Примітка для WSL
 
 У WSL можливі проблеми із socket activation (помилка `Bad file descriptor`). У такому разі використовуйте прямий запуск сервісу без socket-юнита:
