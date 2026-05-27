@@ -34,7 +34,7 @@ jobs:
           scp -P "$SSH_PORT" -o StrictHostKeyChecking=no \
             deploy/target_deploy.sh "$SSH_USER@$SSH_HOST:~/target_deploy.sh"
           ssh -p "$SSH_PORT" -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" \
-            "sudo mv ~/target_deploy.sh /opt/mywebapp/target_deploy.sh && \
+            "sudo -n mv ~/target_deploy.sh /opt/mywebapp/target_deploy.sh && \
             GHCR_USER='$GHCR_USER' GHCR_TOKEN='$GHCR_TOKEN' \
             IMAGE_NAME='$IMAGE_NAME' IMAGE_TAG='$IMAGE_TAG' \
             bash /opt/mywebapp/target_deploy.sh"
@@ -52,5 +52,5 @@ jobs:
           scp -P "$SSH_PORT" -o StrictHostKeyChecking=no \
             deploy/verify.sh "$SSH_USER@$SSH_HOST:~/verify.sh"
           ssh -p "$SSH_PORT" -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" \
-            "sudo mv ~/verify.sh /opt/mywebapp/verify.sh && \
+            "sudo -n mv ~/verify.sh /opt/mywebapp/verify.sh && \
             bash /opt/mywebapp/verify.sh"
